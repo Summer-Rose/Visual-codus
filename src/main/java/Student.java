@@ -47,7 +47,6 @@ public class Student {
 
   //still need getter method for course ID
 
-
   @Override
   public boolean equals(Object otherStudent){
     if (!(otherStudent instanceof Student)) {
