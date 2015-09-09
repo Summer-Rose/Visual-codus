@@ -2,6 +2,7 @@
 
 #### Epicodus group project #1 using Java and Postgres, 09.09.2015
 **_By Summer Brochtrup, Perry Eising, Momo Ozawa, & Juliana Suzuki_**
+
 A web app visualizing the demographic breakdown at Epicodus.
 * Gradle build automation
 * Java 8
