@@ -17,7 +17,9 @@ public class App {
     // Main page
     get("/", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-
+      List<Integer> uniqueAges = Student.getUniqueAges();
+      model.put("ages", uniqueAges);
+      model.put("students", Student.studentsByAge(uniqueAges));
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());

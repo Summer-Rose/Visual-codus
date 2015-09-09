@@ -9,15 +9,15 @@ import org.sql2o.*;
 
 public class Student {
 
-  private int student_id;
-  private int course_id;
-  private int age;
+  private Integer student_id;
+  private Integer course_id;
+  private Integer age;
   private String gender;
   private String origin;
   private Integer distance_traveled;
-  private int salary_before;
+  private Integer salary_before;
 
-  public Student(int course_id, int age, String gender, String origin, Integer distance_traveled, int salary_before) {
+  public Student(Integer course_id, Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     this.course_id = course_id;
     this.age = age;
     this.gender = gender;
@@ -26,11 +26,11 @@ public class Student {
     this.salary_before = salary_before;
   }
 
-  public int getStudentId() {
+  public Integer getStudentId() {
     return student_id;
   }
 
-  public int getAge() {
+  public Integer getAge() {
     return age;
   }
 
@@ -64,7 +64,7 @@ public class Student {
   public void save() {
   try(Connection con = DB.sql2o.open()) {
     String sql = "INSERT INTO students (course_id, age, gender, origin, distance_traveled, salary_before) VALUES (:course_id, :age, :gender, :origin, :distance_traveled, :salary_before)";
-    this.student_id = (int) con.createQuery(sql, true)
+    this.student_id = (Integer) con.createQuery(sql, true)
       .addParameter("course_id", course_id)
       .addParameter("age", age)
       .addParameter("gender", gender)
@@ -83,7 +83,52 @@ public class Student {
     }
   }
 
-  public static Student find(int student_id) {
+  public static List<Integer> getUniqueAges() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT DISTINCT age FROM students ORDER BY age";
+      List<Integer> ages = con.createQuery(sql)
+        .executeAndFetch(Integer.class);
+      return ages;
+    }
+  }
+
+  public Student youngest(){
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT age FROM students ORDER BY age";
+      return con.createQuery(sql)
+      .executeAndFetchFirst(Student.class);
+    }
+  }
+
+  public Student oldest(){
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT age FROM students ORDER BY age DESC";
+      return con.createQuery(sql)
+      .executeAndFetchFirst(Student.class);
+    }
+  }
+
+  public static List<String> studentsByAge(List<Integer> ages){
+    List<String> divStrings = new ArrayList<String>();
+    for (Integer age : ages) {
+      try (Connection con = DB.sql2o.open()) {
+        String sql = "SELECT * FROM students WHERE age = :age";
+        List<Student> students = con.createQuery(sql)
+          .addParameter("age", age)
+          .executeAndFetch(Student.class);
+
+        Integer percentage = students.size() * 100 / Student.all().size();
+        System.out.println(students.size());
+        System.out.println(Student.all().size());
+        System.out.println(percentage);
+        String htmlString = String.format("<div style=\"height: 10px; width: %d%%; background-color: green\"></div>", percentage);
+        divStrings.add(htmlString);
+      }
+    }
+    return divStrings;
+  }
+
+  public static Student find(Integer student_id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM students where student_id=:student_id";
       Student student = con.createQuery(sql)
@@ -93,7 +138,7 @@ public class Student {
     }
   }
 
-  public void update(int course_id, int age, String gender, String origin, int distance_traveled, int salary_before) {
+  public void update(Integer course_id, Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE students SET course_id=:course_id, age=:age, gender=:gender, origin=:origin, distance_traveled=:distance_traveled, salary_before=:salary_before WHERE student_id=:student_id";
       con.createQuery(sql)
