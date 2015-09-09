@@ -1,0 +1,20 @@
+<table class="table table-striped" border="1">
+  <thead>
+  <th>
+    <h1>Students</h1>
+  </th>
+</thead>
+  <tbody>
+    <tr>
+      <td>
+        <ul>
+          #foreach($student in $allStudents)
+          <li><a href="/student/$student.getStudentId()">$student.getName() $student.getDate()</a>&nbsp;&nbsp;<a href="/students/$student.getStudentId()/edit"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;<a href="/students/$student.getStudentId()/delete"><span class="glyphicon glyphicon-trash"></span></a></li>
+          #end
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<a href="/students/new">Add new student</a>
