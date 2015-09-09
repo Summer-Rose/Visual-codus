@@ -108,6 +108,19 @@ public class Student {
     }
   }
 
+  // public String getPercentage(int age) {
+  //   try (Connection con = DB.sql2o.open()) {
+  //     String sql = "SELECT * FROM students WHERE age = :age";
+  //     List<Student> students = con.createQuery(sql)
+  //       .addParameter("age", age)
+  //       .executeAndFetch(Student.class);
+  //
+  //       Integer percentage = students.size() * 100 / Student.all().size();
+  //       String htmlString = String.format("<div style=\"height: 10px; width: %d%%; background-color: green\"></div>", percentage);
+  //       return htmlString;
+  //     }
+  // }
+
   public static List<String> studentsByAge(List<Integer> ages){
     List<String> divStrings = new ArrayList<String>();
     for (Integer age : ages) {
@@ -118,10 +131,10 @@ public class Student {
           .executeAndFetch(Student.class);
 
         Integer percentage = students.size() * 100 / Student.all().size();
-        System.out.println(students.size());
-        System.out.println(Student.all().size());
-        System.out.println(percentage);
-        String htmlString = String.format("<div style=\"height: 10px; width: %d%%; background-color: green\"></div>", percentage);
+        // System.out.println(students.size());
+        // System.out.println(Student.all().size());
+        // System.out.println(percentage);
+        String htmlString = String.format("<div style=\"height: 20px; width: %d%%; background-color: green\"><p class=\"age\">%d</p></div>", percentage, age);
         divStrings.add(htmlString);
       }
     }
