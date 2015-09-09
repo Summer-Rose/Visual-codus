@@ -93,7 +93,7 @@ public class App {
     //   return new ModelAndView(model, layout);
     // }, new VelocityTemplateEngine());
     //
-    // // Create student
+    // Create student
     // post("/students", (request, response) -> {
     //   HashMap<String, Object> model = new HashMap<String, Object>();
     //
@@ -103,7 +103,7 @@ public class App {
     //   Integer studentCourseId = Integer.parseInt(request.queryParams("studentCourses"));
     //
     //   Course newCourse = Course.find(studentCourseId);
-    //   Student newStudent = new Student(studentFirstName, studentLastName, studentDate);
+    //   Student newStudent = new Student();
     //
     //   newStudent.save();
     //   newStudent.addCourse(newCourse);
