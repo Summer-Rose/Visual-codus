@@ -1,0 +1,7 @@
+CREATE DATABASE visual_codus;
+\c visual_codus;
+CREATE TABLE students (student_id SERIAL PRIMARY KEY, course_id int, age int, gender varchar, origin varchar, distance_traveled varchar, salary_before int);
+CREATE TABLE courses (course_id SERIAL PRIMARY KEY, course_name varchar);
+CREATE DATABASE visual_codus_test WITH TEMPLATE visual_codus;
+INSERT INTO students (course_id, age, gender, origin, distance_traveled, salary_before) VALUES (1, 28, 'Female', 'Portland', 0, 20000);
+INSERT INTO courses (course_name) VALUES ('Java/JavaScript/Android');

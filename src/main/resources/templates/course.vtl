@@ -1,0 +1,20 @@
+Students enrolled in this course:
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <td>
+        Course Name:<strong>$showCourse.getName()</strong>
+      </td>
+      <td>
+        Course Number:<strong>$showCourse.getCourseNumber()</strong>
+      </td>
+    </tr>
+    <tr colspan="2"><td>
+      <ul>
+      #foreach($student in $showCourse.getStudents())
+      <li>$student.getName()&nbsp;&nbsp;$student.getDate()</li>
+      #end
+    </ul></td></tr>
+  </tbody>
+</table>

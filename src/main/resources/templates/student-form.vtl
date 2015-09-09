@@ -1,0 +1,53 @@
+
+  #if ($editStudent)
+    <p>
+    Edit this student:
+    </p>
+
+    <form action="/students/$editStudent.getStudentId()" method="post">
+    <label for="editStudentFirstName">Student First Name:</label>
+      <input type="text" name="editStudentFirstName" id="editStudentFirstName" value="$editStudent.getFirstName()">
+      <br>
+    <label for="editStudentLastName">Student Last Name:</label>
+      <input type="text" name="editStudentLastName" id="editStudentLastName" value="$editStudent.getLastName()">
+      <br>
+    <label for="editStudentDate">Student Date Of Enrollment:</label>
+      <input type="date" name="editStudentDate" id="editStudentDate" value="$editStudent.getDate()">
+
+      <label for="editCourses">Change courses:</label>
+      <select name="editCourses">
+        #foreach ($course in $allCourses)
+      <option value="$course.getCourseId()">$course.getName() $course.getCourseNumber()</option>
+        #end
+      </select>
+
+      <br>
+          <button type="submit"> Go!</button>
+    </form>
+
+  #else
+    <p>
+    Add a new student:
+    </p>
+
+    <form action="/students" method="post">
+      <label for="studentFirstName">Student First Name:</label>
+        <input type="text" name="studentFirstName" id="studentFirstName">
+        <br>
+      <label for="studentLastName">Student Last Name:</label>
+        <input type="text" name="studentLastName" id="studentLastName">
+        <br>
+      <label for="studentDate">Student Date Of Enrollment:</label>
+        <input type="date" name="studentDate" id="studentDate">
+        <br>
+
+        <label for="studentCourses">Add courses:</label>
+        <select name="studentCourses">
+          #foreach ($course in $allCourses)
+        <option value="$course.getCourseId()">$course.getName() $course.getCourseNumber()</option>
+          #end
+        </select>
+
+            <button type="submit"> Go!</button>
+    </form>
+  #end
