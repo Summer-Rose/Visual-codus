@@ -1,6 +1,11 @@
+/**
+ * Course.java provides CRUD functionality for Course objects
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 import org.sql2o.*;
+
 
 public class Course {
 
@@ -25,7 +30,8 @@ public class Course {
       return false;
     } else {
       Course newCourse = (Course) otherCourse;
-      return this.getName().equals(newCourse.getName());
+      return this.getName().equals(newCourse.getName()) &&
+        this.getCourseId() == newCourse.getCourseId();
     }
   }
 
@@ -47,21 +53,6 @@ public class Course {
     }
   }
 
-  public void updateName(String course_name) {
-    // update in memory
-    this.course_name = course_name;
-
-    // update in database
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE courses SET course_name=:course_name WHERE course_id=:course_id";
-      this.course_id = (int) con.createQuery(sql, true)
-        .addParameter("course_name", course_name)
-        .addParameter("course_id", this.course_id)
-        .executeUpdate()
-        .getKey();
-    }
-  }
-
   public static Course find(int course_id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM courses where course_id=:course_id";
@@ -72,56 +63,23 @@ public class Course {
     }
   }
 
-  // public void addStudent(Student student) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "INSERT INTO courses_students (course_id, student_id) VALUES (:course_id, :student_id)";
-  //     con.createQuery(sql)
-  //       .addParameter("course_id", this.getCourseId())
-  //       .addParameter("student_id", student.getStudentId())
-  //       .executeUpdate();
-  //   }
-  // }
-
-  // public List<Student> getStudents() {
-  //   try(Connection con = DB.sql2o.open()){
-  //     String sql = "SELECT students.* FROM courses JOIN courses_students ON (courses.course_id=courses_students.course_id) JOIN students ON (courses_students.student_id=students.student_id) WHERE courses.course_id=:course_id";
-  //     List<Student> students = con.createQuery(sql)
-  //       .addParameter("course_id", this.getCourseId())
-  //       .executeAndFetch(Student.class);
-  //     return students;
-  //   }
-  // }
+  public void update(String course_name) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE courses SET course_name=:course_name WHERE course_id=:course_id";
+      this.course_id = (int) con.createQuery(sql, true)
+        .addParameter("course_name", course_name)
+        .addParameter("course_id", this.course_id)
+        .executeUpdate()
+        .getKey();
+    }
+  }
 
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
       String deleteQuery = "DELETE FROM courses WHERE course_id=:course_id;";
         con.createQuery(deleteQuery)
-          .addParameter("course_id", course_id)
+          .addParameter("course_id", this.course_id)
           .executeUpdate();
-
-      // String joinDeleteQuery = "DELETE FROM courses_students WHERE course_id = :course_id";
-      // con.createQuery(joinDeleteQuery)
-      //   .addParameter("course_id", this.getCourseId())
-      //   .executeUpdate();
-    }
-  }
-
-  public void clearStudents() {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "DELETE FROM students;";
-      con.createQuery(sql)
-        .executeUpdate();
-
-    // String joinDeleteQuery = "DELETE FROM courses_students;";
-    // con.createQuery(joinDeleteQuery)
-    //   .executeUpdate();
-     }
-  }
-
-  public static void removeCourse(int course_id) {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "DELETE FROM courses WHERE course_id=:course_id;";
-      con.createQuery(sql).addParameter("course_id",course_id).executeUpdate();
     }
   }
 }
