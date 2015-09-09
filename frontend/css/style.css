@@ -1,0 +1,91 @@
+
+
+html {
+  position: relative;
+  min-height: 100%;
+  border-top:20px solid blue;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.border_bottom{
+  border-bottom:2px solid #cccccc;
+}
+
+.col-md-6{
+  padding-top:1rem;
+}
+
+div {
+  /*border: 1px solid teal;*/
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+
+
+.wrapper{
+  -moz-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  height:200px;
+  width:200px;
+}
+
+.shape {
+  height: 20px;
+  width: 150px;
+  padding-left:20px;
+  padding-bottom:10px;
+  padding-top:0px;
+  margin-left:50px;
+  margin-bottom:20px;
+  border-bottom: 2px solid red;
+  border-left:2px solid black;
+  -moz-transform: skew(-45deg);
+  -webkit-transform: skew(-45deg);
+  transform: skew(-45deg);
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+
+}
+
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #000;
+  color:white;
+  padding:1rem;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.container {
+  width: auto;
+  max-width: 90%;
+  padding: 0 15px;
+}
+
+
+.red{
+  border:1px solid red;
+}
+
+.green{
+  border:1px solid green;
+}
+
+.blue{
+  border:1px solid blue;
+}
