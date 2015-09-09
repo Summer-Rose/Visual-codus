@@ -5,12 +5,12 @@ public class DatabaseRule extends ExternalResource {
 
   protected void before() {
     DB.sql2o = new
-    Sql2o("jdbc:postgresql://localhost:5432/to_do_test", null, null);
+    Sql2o("jdbc:postgresql://localhost:5432/visual_codus_test", null, null);
   }
 
   protected void after() {
     try(Connection con = DB.sql2o.open()) {
-      
+      //clear statements here
     }
   }
 }

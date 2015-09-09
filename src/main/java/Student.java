@@ -5,35 +5,48 @@ import org.sql2o.*;
 public class Student {
 
   private int student_id;
-  private String first_name;
-  private String last_name;
-  private String date_of_enrollment;
+  private int course_id;
+  private int age;
+  private String gender;
+  private String origin;
+  private Integer distance_traveled;
+  private int salary_before;
 
-  public Student(String first_name, String last_name, String date_of_enrollment) {
-    this.first_name = first_name;
-    this.last_name = last_name;
-    this.date_of_enrollment = date_of_enrollment;
+  public Student(int course_id, int age, String gender, String origin, Integer distance_traveled, int salary_before) {
+    this.course_id = course_id;
+    this.age = age;
+    this.gender = gender;
+    this.origin = origin;
+    this.distance_traveled = distance_traveled;
+    this.salary_before = salary_before;
   }
 
   public int getStudentId() {
     return student_id;
   }
 
-  public String getName() {
-    return first_name + " " + last_name;
+  public int getAge() {
+    return age;
   }
 
-  public String getFirstName() {
-    return first_name;
+  public String getGender() {
+    return gender;
   }
 
-  public String getLastName() {
-    return last_name;
+  public String getOrigin() {
+    return origin;
   }
 
-  public String getDate() {
-    return date_of_enrollment;
+  public Integer getDistanceTraveled() {
+    return distance_traveled;
   }
+
+  public Integer getSalaryBefore() {
+    return salary_before;
+  }
+
+  //still need getter method for course ID
+
 
   @Override
   public boolean equals(Object otherStudent){
@@ -41,18 +54,20 @@ public class Student {
       return false;
     } else {
       Student newStudent = (Student) otherStudent;
-      return this.getName().equals(newStudent.getName()) &&
+      return this.getOrigin().equals(newStudent.getOrigin()) &&
              this.getStudentId() == newStudent.getStudentId();
     }
   }
 
   public void save() {
   try(Connection con = DB.sql2o.open()) {
-    String sql = "INSERT INTO students (first_name, last_name, date_of_enrollment) VALUES (:first_name, :last_name, :date_of_enrollment)";
+    String sql = "INSERT INTO students (course_id, age, gender, origin, distance_traveled, salary_before) VALUES (:course_id, :age, :gender, :origin, :distance_traveled, :salary_before)";
     this.student_id = (int) con.createQuery(sql, true)
-      .addParameter("first_name", first_name)
-      .addParameter("last_name", last_name)
-      .addParameter("date_of_enrollment", date_of_enrollment)
+      .addParameter("course_id", course_id)
+      .addParameter("age", age)
+      .addParameter("origin", origin)
+      .addParameter("distance_traveled", distance_traveled)
+      .addParameter("salary_before", salary_before)
       .executeUpdate()
       .getKey();
     }
@@ -75,56 +90,63 @@ public class Student {
     }
   }
 
-  public void update(String first_name, String last_name, String date_of_enrollment, Course newCourse) {
-    updateFirstName(first_name);
-    updateLastName(last_name);
-    updateDate(date_of_enrollment);
-    updateCourse(newCourse);
-  }
-
-  public void updateFirstName(String first_name) {
-    this.first_name = first_name;
+  public void update(int course_id, int age, String gender, String origin, String distance_traveled, int salary_before, Course newCourse) {
+  //  this.first_name = first_name; what does this need to be?
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE students SET first_name=:first_name WHERE student_id=:student_id";
+      String sql = "UPDATE students SET course_id=:course_id, age=:age, origin=:origin, distance_traveled=:distance_traveled, salary_before:=salary_before WHERE student_id=:student_id";
       con.createQuery(sql)
-        .addParameter("first_name", first_name)
-        .addParameter("student_id", student_id)
-        .executeUpdate();
+      .addParameter("age", age)
+      .addParameter("origin", origin)
+      .addParameter("distance_traveled", distance_traveled)
+      .addParameter("salary_before", salary_before)
+      .executeUpdate();
     }
   }
 
-  public void updateLastName(String last_name) {
-    this.last_name = last_name;
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE students SET last_name=:last_name WHERE student_id=:student_id";
-      con.createQuery(sql)
-        .addParameter("last_name", last_name)
-        .addParameter("student_id", student_id)
-        .executeUpdate();
-    }
-  }
+  //
+  // public void updateFirstName(String first_name) {
+  //   this.first_name = first_name;
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String sql = "UPDATE students SET first_name=:first_name WHERE student_id=:student_id";
+  //     con.createQuery(sql)
+  //       .addParameter("first_name", first_name)
+  //       .addParameter("student_id", student_id)
+  //       .executeUpdate();
+  //   }
+  // }
+  //
+  // public void updateLastName(String last_name) {
+  //   this.last_name = last_name;
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String sql = "UPDATE students SET last_name=:last_name WHERE student_id=:student_id";
+  //     con.createQuery(sql)
+  //       .addParameter("last_name", last_name)
+  //       .addParameter("student_id", student_id)
+  //       .executeUpdate();
+  //   }
+  // }
+  //
+  // public void updateDate(String date_of_enrollment) {
+  //   this.date_of_enrollment = date_of_enrollment;
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String sql = "UPDATE students SET date_of_enrollment=:date_of_enrollment WHERE student_id=:student_id";
+  //     con.createQuery(sql)
+  //       .addParameter("date_of_enrollment", date_of_enrollment)
+  //       .addParameter("student_id", student_id)
+  //       .executeUpdate();
+  //   }
+  // }
 
-  public void updateDate(String date_of_enrollment) {
-    this.date_of_enrollment = date_of_enrollment;
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE students SET date_of_enrollment=:date_of_enrollment WHERE student_id=:student_id";
-      con.createQuery(sql)
-        .addParameter("date_of_enrollment", date_of_enrollment)
-        .addParameter("student_id", student_id)
-        .executeUpdate();
-    }
-  }
-
-  public void updateCourse(Course newCourse) {
-    try(Connection con = DB.sql2o.open()) {
-      Integer newCourseId = newCourse.getCourseId();
-      String sql = "UPDATE courses_students SET course_id = :course_id WHERE student_id = :student_id";
-      con.createQuery(sql)
-        .addParameter("course_id", newCourseId)
-        .addParameter("student_id", student_id)
-        .executeUpdate();
-    }
-  }
+  // public void updateCourse(Course newCourse) {
+  //   try(Connection con = DB.sql2o.open()) {
+  //     Integer newCourseId = newCourse.getCourseId();
+  //     String sql = "UPDATE courses_students SET course_id = :course_id WHERE student_id = :student_id";
+  //     con.createQuery(sql)
+  //       .addParameter("course_id", newCourseId)
+  //       .addParameter("student_id", student_id)
+  //       .executeUpdate();
+  //   }
+  // }
 
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
