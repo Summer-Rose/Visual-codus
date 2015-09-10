@@ -86,6 +86,15 @@ public class App {
         return new ModelAndView(model, layout);
       }, new VelocityTemplateEngine());
 
+    // Index for students with edit fields
+      get("/backend/students", (request, response) -> {
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        model.put("allStudents", Student.all());
+        model.put("allCourses", Course.all());
+        model.put("template", "templates/backend-students.vtl");
+        return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+
     // Show empty new course form
     get("/backend/course/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -110,30 +119,36 @@ public class App {
       newCourse.save();
 
       model.put("allCourses", Course.all());
-      model.put("template", "templates/courses.vtl");
+      model.put("template", "templates/backend-courses.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
-    //
-    // Create student
-    // post("/students", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //
-    //   String studentFirstName = request.queryParams("studentFirstName");
-    //   String studentLastName = request.queryParams("studentLastName");
-    //   String studentDate= request.queryParams("studentDate");
-    //   Integer studentCourseId = Integer.parseInt(request.queryParams("studentCourses"));
-    //
-    //   Course newCourse = Course.find(studentCourseId);
-    //   Student newStudent = new Student();
-    //
-    //   newStudent.save();
-    //   newStudent.addCourse(newCourse);
-    //
-    //   model.put("allStudents", Student.all());
-    //   model.put("template", "templates/students.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
-    //
+
+    //Create student
+    post("/backend/students", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Integer studentAge = Integer.parseInt(request.queryParams("age"));
+      String studentGender = request.queryParams("gender");
+      String studentOrigin = request.queryParams("origin");
+      String studentDistanceRaw = request.queryParams("distance");
+      Integer studentDistanceClean  = Integer.parseInt(studentDistanceRaw.replaceAll("[^a-zA-Z0-9]",""));
+      String studentSalaryRaw = request.queryParams("salary");
+      Integer studentSalaryClean  = Integer.parseInt(studentSalaryRaw.replaceAll("[^a-zA-Z0-9]",""));
+      Integer studentCourseId = Integer.parseInt(request.queryParams("studentCourses"));
+
+      Course newCourse = Course.find(studentCourseId);
+      Student newStudent = new Student(studentAge, studentGender, studentOrigin, studentDistanceClean, studentSalaryClean);
+
+      newStudent.save();
+      newStudent.addCourse(newCourse);
+
+      //model.put("studentsByCourse", Student.allStudentsByCourse(studentCourseId));
+
+      model.put("allStudents", Student.all());
+      model.put("allCourses", Course.all());
+      model.put("template", "templates/backend-students.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     // Edit course
     get("/backend/courses/:id/edit", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -167,7 +182,7 @@ public class App {
       editCourse.update(newCourseName);
 
       model.put("allCourses", Course.all());
-      model.put("template", "templates/courses.vtl");
+      model.put("template", "templates/backend-courses.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
     //
@@ -198,7 +213,7 @@ public class App {
       Course deleteCourse = Course.find(id);
       deleteCourse.delete();
       model.put("allCourses", Course.all());
-      model.put("template", "templates/courses.vtl");
+      model.put("template", "templates/backend-courses.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
     //

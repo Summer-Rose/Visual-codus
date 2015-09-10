@@ -30,24 +30,28 @@
     Add a new student:
     </p>
 
-    <form action="/students" method="post">
-      <label for="studentFirstName">Student First Name:</label>
-        <input type="text" name="studentFirstName" id="studentFirstName">
+    <form action="/backend/students" method="post">
+      <label for="age">Student Age:</label>
+        <input type="text" name="age" id="age">
         <br>
-      <label for="studentLastName">Student Last Name:</label>
-        <input type="text" name="studentLastName" id="studentLastName">
+      <label for="gender">Student Self-identified Gender:</label>
+        <input type="text" name="gender" id="gender">
         <br>
-      <label for="studentDate">Student Date Of Enrollment:</label>
-        <input type="date" name="studentDate" id="studentDate">
+      <label for="origin">City student moved from for Epicodus:</label>
+        <input type="text" name="origin" id="origin">
         <br>
-
+        <label for="distance">Distance student travelled for Epicodus in miles:</label>
+          <input type="text" name="distance" id="distance">
+          <br>
+        <label for="salary">Salary student made before Epicodus (gross annual income in thousands):</label>
+          <input type="text" name="salary" id="salary">
+          <br>
         <label for="studentCourses">Add courses:</label>
         <select name="studentCourses">
           #foreach ($course in $allCourses)
-        <option value="$course.getCourseId()">$course.getName() $course.getCourseNumber()</option>
+        <option value="$course.getCourseId()">$course.getName()</option>
           #end
         </select>
-
             <button type="submit"> Go!</button>
     </form>
   #end

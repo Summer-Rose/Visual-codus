@@ -6,14 +6,11 @@ Courses this student is enrolled in:
       <td>
         Student Name:<strong>$showStudent.getName()</strong>
       </td>
-      <td>
-        Date of Enrollment:<strong>$showStudent.getDate()</strong>
-      </td>
     </tr>
-    <tr colspan="2"><td>
+    <tr><td>
       <ul>
       #foreach($course in $showStudent.getCourses())
-      <li>$course.getName()&nbsp;&nbsp;$course.getCourseNumber()</li>
+      <li>$course.getName()</li>
       #end
     </ul></td></tr>
   </tbody>
