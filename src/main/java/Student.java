@@ -116,4 +116,47 @@ public class Student {
         .executeUpdate();
     }
   }
+
+  /** sortByDistance returns a List of unique distance_traveled values sorted in ascending order */
+  public static List<Integer> getUniqueDistances() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT DISTINCT distance_traveled FROM students ORDER BY distance_traveled";
+      List<Integer> distances = con.createQuery(sql)
+        .executeAndFetch(Integer.class);
+      return distances;
+    }
+  }
+
+  /** stringDistanceSVG creates and returns the string format of svg elements needed to draw the distance map */
+  public static List<String> stringDistanceSVG(Integer windowHeight, Integer windowWidth, String lineColor, String pointColor, Integer pointRadius) {
+    // List of svg elements to draw in string format
+    List<String> distanceSVG = new ArrayList<String>();
+
+    // Vertically center elements within svg window height; all elements share the same fixed y-coordinate
+    Integer yFixed = windowHeight/2;
+
+    // Draw a line that is 80% of the window width
+    double maxLength = windowWidth * .8;
+    double xShift = (windowWidth - maxLength) / 2;
+    String line = String.format("<line x1=0 y1=%d x2=%f y2=%d style=\"stroke:%s\" transform=\"translate(%f)\"/>", yFixed, maxLength, yFixed, lineColor, xShift);
+    distanceSVG.add(line);
+
+    // Draw points along the line corresponding to relative proportional distance from Portland (origin)
+    List<Integer> sortedDistances = getUniqueDistances();
+    Integer farthestDistance = sortedDistances.get(sortedDistances.size() - 1);
+    for (Integer distance : sortedDistances) {
+      System.out.println("Distance: " + distance);
+      double xCoordinate = (double) distance * maxLength / farthestDistance;
+      String point = String.format("<circle cx=%f cy=%d r=%d fill=\"%s\" transform=\"translate(%f)\"/>", xCoordinate, yFixed, pointRadius, pointColor, xShift);
+      distanceSVG.add(point);
+    }
+    return distanceSVG;
+  }
+
+
+
+
+
+
+
 }
