@@ -21,7 +21,8 @@ public class App {
       Integer windowWidth = 800;
       model.put("wHeight", windowHeight);
       model.put("wWidth", windowWidth);
-      model.put("stringDistanceSVG", Student.stringDistanceSVG(windowHeight, windowWidth, "black", "red", 5));
+      model.put("stringDistancesSVG", Student.stringDistancesSVG(windowHeight, windowWidth, "black", "red", 5));
+      model.put("stringOrigins", Student.stringOrigins());
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());

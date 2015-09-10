@@ -1,5 +1,9 @@
 <svg height=$wHeight width=$wWidth>
-  #foreach($svgElement in $stringDistanceSVG)
+  #foreach($svgElement in $stringDistancesSVG)
   $svgElement
   #end
 </svg>
+
+#foreach ($origin in $stringOrigins)
+<h3>$origin</h3>
+#end
