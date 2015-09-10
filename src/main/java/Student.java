@@ -18,7 +18,7 @@ public class Student {
   private Integer distance_traveled;
   private Integer salary_before;
 
-  public Student(Integer course_id, Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
+  public Student(Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     this.course_id = course_id;
     this.age = age;
     this.gender = gender;
@@ -166,16 +166,16 @@ public class Student {
         }
       }
 
-      salaryRanges.put("salary010", String div010 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$0-10,000</p></div>", students010 * 100 / Student.all().size()));
-      salaryRanges.put("salary1020", String div1020 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$10- 20,000</p></div>", students1020 * 100 / Student.all().size()));
-      salaryRanges.put("salary2030", String div2030 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$20-30,000</p></div>", students2030 * 100 / Student.all().size()));
-      salaryRanges.put("salary3040", String div3040 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$30-40,000</p></div>", students3040 * 100 / Student.all().size()));
-      salaryRanges.put("salary4050", String div4050 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$40-50,000</p></div>", students4050 * 100 / Student.all().size()));
-      salaryRanges.put("salary5060", String div5060 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$50-60,000</p></div>", students5060 * 100 / Student.all().size()));
-      salaryRanges.put("salary6070", String div6070 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$60-70,000</p></div>", students6070 * 100 / Student.all().size()));
-      salaryRanges.put("salary7080", String div7080 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$70-80,000</p></div>", students7080 * 100 / Student.all().size()));
-      salaryRanges.put("salary8090", String div8090 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$80-90,000</p></div>", students8090 * 100 / Student.all().size()));
-      salaryRanges.put("salary90plus", String div90plus = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$90,000+</p></div>", students90plus * 100 / Student.all().size()));
+      // salaryRanges.put("salary010", String div010 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$0-10,000</p></div>", students010 * 100 / Student.all().size()));
+      // salaryRanges.put("salary1020", String div1020 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$10- 20,000</p></div>", students1020 * 100 / Student.all().size()));
+      // salaryRanges.put("salary2030", String div2030 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$20-30,000</p></div>", students2030 * 100 / Student.all().size()));
+      // salaryRanges.put("salary3040", String div3040 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$30-40,000</p></div>", students3040 * 100 / Student.all().size()));
+      // salaryRanges.put("salary4050", String div4050 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$40-50,000</p></div>", students4050 * 100 / Student.all().size()));
+      // salaryRanges.put("salary5060", String div5060 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$50-60,000</p></div>", students5060 * 100 / Student.all().size()));
+      // salaryRanges.put("salary6070", String div6070 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$60-70,000</p></div>", students6070 * 100 / Student.all().size()));
+      // salaryRanges.put("salary7080", String div7080 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$70-80,000</p></div>", students7080 * 100 / Student.all().size()));
+      // salaryRanges.put("salary8090", String div8090 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$80-90,000</p></div>", students8090 * 100 / Student.all().size()));
+      // salaryRanges.put("salary90plus", String div90plus = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$90,000+</p></div>", students90plus * 100 / Student.all().size()));
       return salaryRanges;
     }
   }
@@ -227,16 +227,15 @@ public class Student {
   }
 
 
-
-  public static Student find(Integer student_id) {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM students where student_id=:student_id";
-      Student student = con.createQuery(sql)
-        .addParameter("student_id", student_id)
-        .executeAndFetchFirst(Student.class);
-      return student;
-    }
-  }
+  // public static Student find(Integer student_id) {
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String sql = "SELECT * FROM students where student_id=:student_id";
+  //     Student student = con.createQuery(sql)
+  //       .addParameter("student_id", student_id)
+  //       .executeAndFetchFirst(Student.class);
+  //     return student;
+  //   }
+  // }
 
   public void addCourse(Course course) {
   try (Connection con = DB.sql2o.open()) {
@@ -248,7 +247,7 @@ public class Student {
   }
 }
 
-  public void update(Integer course_id, Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
+  public void update(Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE students SET course_id=:course_id, age=:age, gender=:gender, origin=:origin, distance_traveled=:distance_traveled, salary_before=:salary_before WHERE student_id=:student_id";
       con.createQuery(sql)
