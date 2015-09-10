@@ -109,7 +109,7 @@ public class Student {
           salaryRange.put(key, salaryRange.get(key)+1);
           }
       HashMap<Integer, String> salaryDivs = new HashMap<Integer, String>();
-        //Initializing salaryDiv keys with values set to 0
+        //Initializing salaryDiv keys and adding String div
         for (Integer i = 0; i <= 9; i++) {
           String div = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"></div>", salaryRange.get(i) * 100 / Student.all().size());
           salaryDivs.put(i, div);
