@@ -266,7 +266,7 @@ public class Student {
     // Save farthestDistance into a variable
     List<Student> sortedData = getUniqueOriginsDistances();
     Integer farthestDistance = sortedData.get(sortedData.size() - 1).getDistanceTraveled();
-    
+
     // Draw points along the line corresponding to relative proportional distance from Portland (origin)
     for (int index=0; index<sortedData.size(); index++) {
       Integer distance = sortedData.get(index).getDistanceTraveled();
@@ -289,6 +289,38 @@ public class Student {
     return originList;
   }
 
+  public static List<String> getAllGenders() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT gender FROM students";
+      List<String> allGenders = con.createQuery(sql)
+        .executeAndFetch(String.class);
+        return allGenders;
+    }
+  }
+
+  public static List<String> displayGender(List<String> listGenders){
+    List<String> divStrings = new ArrayList<String>();
+    Integer female = 0;
+    Integer male = 0;
+    Integer nonbinarytrans = 0;
+
+    for (String gender : listGenders){
+      if (gender.equals("F")) {
+        female++;
+      } else if (gender.equals("M")){
+        male++;
+      } else {
+        nonbinarytrans++;
+      }
+    }
+    String htmlStringF = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: green\"></div>", female * 100 / Student.all().size());
+    divStrings.add(htmlStringF);
+    String htmlStringM = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: red\"></div>", male * 100 / Student.all().size());
+    divStrings.add(htmlStringM);
+    String htmlStringNBT = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: blue\"></div>", nonbinarytrans * 100 / Student.all().size());
+    divStrings.add(htmlStringNBT);
+    return divStrings;
+  }
 
 
 
