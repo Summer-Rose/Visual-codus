@@ -17,7 +17,7 @@ public class Student {
   private Integer distance_traveled;
   private int salary_before;
 
-  public Student(int course_id, int age, String gender, String origin, Integer distance_traveled, int salary_before) {
+  public Student(int age, String gender, String origin, Integer distance_traveled, int salary_before) {
     this.course_id = course_id;
     this.age = age;
     this.gender = gender;
@@ -83,6 +83,26 @@ public class Student {
     }
   }
 
+  // public static List<Student> allStudentsByCourse(Integer course_id) {
+  //   String sql = "SELECT * FROM students WHERE course_id:=course_id";
+  //   try(Connection con = DB.sql2o.open()) {
+  //     return con.createQuery(sql)
+  //     .addParameter("course_id", course_id)
+  //     .executeAndFetch(Student.class);
+  //   }
+  // }
+
+
+  public static String getCourseNameByStudentId(int student_id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT course_name FROM courses JOIN students ON (students.course_id = courses.course_id) WHERE students.student_id = :student_id";
+      String courseName = con.createQuery(sql)
+        .addParameter("student_id", student_id)
+        .executeAndFetchFirst(String.class);
+      return courseName;
+    }
+  }
+
   public static Student find(int student_id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM students where student_id=:student_id";
@@ -93,7 +113,17 @@ public class Student {
     }
   }
 
-  public void update(int course_id, int age, String gender, String origin, int distance_traveled, int salary_before) {
+  public void addCourse(Course course) {
+  try (Connection con = DB.sql2o.open()) {
+    String sql = "UPDATE students SET course_id=:course_id WHERE student_id=:student_id";
+    con.createQuery(sql)
+      .addParameter("course_id", course.getCourseId())
+      .addParameter("student_id", this.getStudentId())
+      .executeUpdate();
+  }
+}
+
+  public void update( Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE students SET course_id=:course_id, age=:age, gender=:gender, origin=:origin, distance_traveled=:distance_traveled, salary_before=:salary_before WHERE student_id=:student_id";
       con.createQuery(sql)

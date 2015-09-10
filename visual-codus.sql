@@ -10,14 +10,14 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: courses; Type: TABLE; Schema: public; Owner: mozawa; Tablespace: 
+-- Name: courses; Type: TABLE; Schema: public; Owner: mozawa; Tablespace:
 --
 
 CREATE TABLE courses (
@@ -63,7 +63,7 @@ ALTER SEQUENCE courses_course_id_seq OWNED BY courses.course_id;
 
 
 --
--- Name: students; Type: TABLE; Schema: public; Owner: mozawa; Tablespace: 
+-- Name: students; Type: TABLE; Schema: public; Owner: mozawa; Tablespace:
 --
 
 CREATE TABLE students (
@@ -145,7 +145,7 @@ SELECT pg_catalog.setval('students_student_id_seq', 1, false);
 
 
 --
--- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: mozawa; Tablespace: 
+-- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: mozawa; Tablespace:
 --
 
 ALTER TABLE ONLY courses
@@ -153,7 +153,7 @@ ALTER TABLE ONLY courses
 
 
 --
--- Name: students_pkey; Type: CONSTRAINT; Schema: public; Owner: mozawa; Tablespace: 
+-- Name: students_pkey; Type: CONSTRAINT; Schema: public; Owner: mozawa; Tablespace:
 --
 
 ALTER TABLE ONLY students
@@ -173,4 +173,3 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
-
