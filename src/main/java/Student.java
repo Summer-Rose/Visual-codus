@@ -141,7 +141,7 @@ public class Student {
       HashMap<Integer, String> salaryDivs = new HashMap<Integer, String>();
         //Initializing salaryDiv keys and adding String div
         for (Integer i = 0; i <= 9; i++) {
-          String div = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"></div>", salaryRange.get(i) * 100 / Student.all().size());
+          String div = String.format("<div style=\"width: %d%%;\" class=\"bar-style salary-bar\"></div>", salaryRange.get(i) * 100 / Student.all().size());
           salaryDivs.put(i, div);
         }
       return salaryDivs;
@@ -187,7 +187,7 @@ public class Student {
           .executeAndFetch(Student.class);
 
         Integer percentage = students.size() * 100 / Student.all().size();
-        String htmlString = String.format("<div style=\"height: 20px; width: %d%%; background-color: green\"><p class=\"age\">%d</p></div>", percentage, age);
+        String htmlString = String.format("<div style=\"width: %d%%\" class=\"bar-style age-bar\"><p class=\"age\">%d</p></div>", percentage, age);
         divStrings.add(htmlString);
       }
     }
