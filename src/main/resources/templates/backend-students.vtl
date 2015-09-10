@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>All Students currently enrolled at Epicodus with data in the system:</h1>
+    <table class="table table-striped" border="1">
+      <thead>
+      <th>
+      Course
+      </th>
+      <th>
+      Age
+      </th>
+      <th>
+      Gender
+      </th>
+      <th>
+      Origin
+      </th>
+      <th>
+      Distance Traveled
+      </th>
+      <th>
+      Salary Before Epicodus
+      </th>
+      <th>Options</th>
+    </thead>
+      <tbody>
+        <tr>
+        #foreach($student in $allStudents)
+          <td>
+            $student.getCourseNameByStudentId($student.getStudentId())
+          </td>
+          <td>$student.getAge()</td>
+          <td>$student.getGender()</td>
+          <td>$student.getOrigin()</td>
+          <td>$student.getDistanceTraveled()</td>
+          <td>$student.getSalaryBefore()</td>
+          <td><a href="/backend/students/$student.getStudentId()/edit"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;<a href="/backend/students/$student.getStudentId()/delete"><span class="glyphicon glyphicon-trash"></span></a></td>
+        </tr>
+    #end
+      </tbody>
+    </table>
+    <a href="/backend/student/new">Add new student</a> | <a href="/backend/course/new">Add a new course</a>
+  </div>
+</div>

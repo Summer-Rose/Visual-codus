@@ -63,6 +63,26 @@ public class Course {
     }
   }
 
+  public static String getCourseNameById(int course_id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT course_name FROM courses where course_id=:course_id";
+      String courseName = con.createQuery(sql)
+        .addParameter("course_id", course_id)
+        .executeAndFetchFirst(String.class);
+      return courseName;
+    }
+  }
+
+  // public static List<Student> studentsByCourse(int course_id){
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String sql = "SELECT * FROM students WHERE course_id=:course_id";
+  //     List<Student> students = con.createQuery(sql)
+  //       .addParameter("course_id", course_id)
+  //       .executeAndFetchFirst(Student.class);
+  //     return students;
+  //   }
+  // }
+
   public void update(String course_name) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE courses SET course_name=:course_name WHERE course_id=:course_id";

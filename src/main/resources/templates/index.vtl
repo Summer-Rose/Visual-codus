@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <svg height=$wHeight width=$wWidth>
   #foreach($svgElement in $stringDistancesSVG)
   $svgElement
@@ -7,3 +8,23 @@
 #foreach ($origin in $stringOrigins)
 <h3>$origin</h3>
 #end
+=======
+<div class="row">
+
+<div class="container">
+  <div class="graph-container">
+    #foreach ($student in $students)
+        $student
+        <br>
+    #end
+  </div>
+</div>
+</div>
+
+<div class="container">
+  #foreach ($number in [0..9])
+    $salaryRanges.get($number)
+    <br>
+  #end
+</div>
+>>>>>>> 8c9336d4d24e82cf0ceec16414cb33e8a5cc4e11
