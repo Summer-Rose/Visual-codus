@@ -1,3 +1,58 @@
+ /*Age Display Styles*/
+
+.bar-style{
+border-radius: 5px;
+height: 20px;
+border: 2px solid white;
+}
+
+.age-bar{
+background-color: #22851D;
+-webkit-box-shadow: inset 1px 2px 5px 0px rgba(0,0,0,0.5);
+-moz-box-shadow: inset 1px 2px 5px 0px rgba(0,0,0,0.5);
+box-shadow: inset 1px 2px 5px 0px rgba(0,0,0,0.5);
+color:#FFF;
+}
+
+.salary-bar{
+background-color: #B5442D;
+-webkit-box-shadow: inset 1px 2px 5px 0px rgba(0,0,0,0.5);
+-moz-box-shadow: inset 1px 2px 5px 0px rgba(0,0,0,0.5);
+box-shadow: inset 1px 2px 5px 0px rgba(0,0,0,0.5);
+
+}
+
+.age{
+  padding-left:0.5rem;
+  padding-bottom:5px;
+  font-size:10px;
+}
+
+.age-box{
+border-right:1px dashed #cccccc;
+}
+
+
+tr{
+  border-top: 1px solid #cccccc;
+}
+
+tr:nth-child(1){
+  border:none;
+}
+
+tr:nth-child(9){
+  border-bottom: 1px solid #cccccc;
+}
+.salary-box{
+border-right:1px dashed #cccccc;
+margin-right:5px;
+padding-right:5px;
+}
+
+.salary-box{
+border-right:1px dashed #cccccc;
+}
 
 .border_bottom{
   border-bottom:2px solid #cccccc;
