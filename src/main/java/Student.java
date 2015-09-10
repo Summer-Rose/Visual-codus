@@ -123,7 +123,7 @@ public class Student {
   }
 }
 
-  public void update(int course_id, int age, String gender, String origin, int distance_traveled, int salary_before) {
+  public void update( Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE students SET course_id=:course_id, age=:age, gender=:gender, origin=:origin, distance_traveled=:distance_traveled, salary_before=:salary_before WHERE student_id=:student_id";
       con.createQuery(sql)

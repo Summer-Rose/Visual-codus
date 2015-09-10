@@ -1,20 +1,26 @@
-Courses this student is enrolled in:
+<div class="row">
+  <div class="col-md-12">
 
-<table class="table table-striped">
-  <tbody>
-    <tr>
-      <td>
-        Student Name:<strong>$showStudent.getName()</strong>
-      </td>
-      <td>
-        Date of Enrollment:<strong>$showStudent.getDate()</strong>
-      </td>
-    </tr>
-    <tr colspan="2"><td>
-      <ul>
-      #foreach($course in $showStudent.getCourses())
-      <li>$course.getName()&nbsp;&nbsp;$course.getCourseNumber()</li>
-      #end
-    </ul></td></tr>
-  </tbody>
-</table>
+        <h1>Courses this student is enrolled in:</h1>
+
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <td>
+            Student Name:<strong>$showStudent.getName()</strong>
+          </td>
+          <td>
+            Date of Enrollment:<strong>$showStudent.getDate()</strong>
+          </td>
+        </tr>
+        <tr colspan="2"><td>
+          <ul>
+          #foreach($course in $showStudent.getCourses())
+          <li>$course.getName()&nbsp;&nbsp;$course.getCourseNumber()</li>
+          #end
+        </ul></td></tr>
+      </tbody>
+    </table>
+    <a href="/backend"> Go To Admin Home</a>
+  </div>
+</div>
