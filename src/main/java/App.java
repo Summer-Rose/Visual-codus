@@ -58,8 +58,36 @@ public class App {
       return new ModelAndView(model, layout);
       }, new VelocityTemplateEngine());
 
+//////////backend//////////
+
+    //backend homepage
+    get("/backend", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      model.put("template", "templates/backend-index.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    // Show individual course with edit fields
+    get("/course/:id", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int id = Integer.parseInt(request.params(":id"));
+      Course showCourse = Course.find(id);
+      model.put("showCourse", showCourse);
+      model.put("template", "templates/backend-course.vtl");
+      return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+
+    // Index for courses with edit fields
+      get("/backend/courses", (request, response) -> {
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        model.put("allCourses", Course.all());
+        model.put("template", "templates/backend-courses.vtl");
+        return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+
     // Show empty new course form
-    get("/courses/new", (request, response) -> {
+    get("/backend/course/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
 
       model.put("template", "templates/course-form.vtl");
@@ -67,31 +95,24 @@ public class App {
     }, new VelocityTemplateEngine());
 
     // Show empty new student form
-    get("/students/new", (request, response) -> {
+    get("/backend/student/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("allCourses", Course.all());
       model.put("template", "templates/student-form.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    // // Create course
-    // post("/courses", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //
-    //   String courseName = request.queryParams("courseName");
-    //   String courseNumberString = request.queryParams("courseNumber");
-    //   System.out.println(courseNumberString);
-    //
-    //   Integer courseNumber = Integer.parseInt(courseNumberString);
-    //
-    //   Course newCourse = new Course(courseName, courseNumber);
-    //
-    //   newCourse.save();
-    //
-    //   model.put("allCourses", Course.all());
-    //   model.put("template", "templates/courses.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
+    // Create course
+    post("/backend/courses", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String courseName = request.queryParams("courseName");
+      Course newCourse = new Course(courseName);
+      newCourse.save();
+
+      model.put("allCourses", Course.all());
+      model.put("template", "templates/courses.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
     //
     // Create student
     // post("/students", (request, response) -> {
@@ -113,16 +134,16 @@ public class App {
     //   return new ModelAndView(model, layout);
     // }, new VelocityTemplateEngine());
     //
-    // // Edit course
-    // get("/courses/:id/edit", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   int id = Integer.parseInt(request.params(":id"));
-    //   Course editCourse = Course.find(id);
-    //
-    //   model.put("editCourse", editCourse);
-    //   model.put("template", "templates/course-form.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
+    // Edit course
+    get("/backend/courses/:id/edit", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int id = Integer.parseInt(request.params(":id"));
+      Course editCourse = Course.find(id);
+
+      model.put("editCourse", editCourse);
+      model.put("template", "templates/course-form.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
     //
     // // Edit student
     // get("/students/:id/edit", (request, response) -> {
@@ -135,21 +156,20 @@ public class App {
     //   return new ModelAndView(model, layout);
     // }, new VelocityTemplateEngine());
     //
-    // // Update course
-    // post("/courses/:id", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   String newCourseName = request.queryParams("editCourseName");
-    //   Integer newCourseNumber = Integer.parseInt(request.queryParams("editCourseNumber"));
-    //
-    //   int id = Integer.parseInt(request.params(":id"));
-    //   Course editCourse = Course.find(id);
-    //
-    //   editCourse.update(newCourseName, newCourseNumber);
-    //
-    //   model.put("allCourses", Course.all());
-    //   model.put("template", "templates/courses.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
+    // Update course
+    post("/backend/courses/:id", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String newCourseName = request.queryParams("editCourseName");
+
+      int id = Integer.parseInt(request.params(":id"));
+      Course editCourse = Course.find(id);
+
+      editCourse.update(newCourseName);
+
+      model.put("allCourses", Course.all());
+      model.put("template", "templates/courses.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
     //
     // // Update student
     // post("/students/:id", (request, response) -> {
@@ -171,16 +191,16 @@ public class App {
     //   return new ModelAndView(model, layout);
     // }, new VelocityTemplateEngine());
     //
-    // // Delete course
-    // get("/courses/:id/delete", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   int id = Integer.parseInt(request.params(":id"));
-    //   Course deleteCourse = Course.find(id);
-    //   deleteCourse.delete();
-    //   model.put("allCourses", Course.all());
-    //   model.put("template", "templates/courses.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
+    // Delete course
+    get("/backend/courses/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int id = Integer.parseInt(request.params(":id"));
+      Course deleteCourse = Course.find(id);
+      deleteCourse.delete();
+      model.put("allCourses", Course.all());
+      model.put("template", "templates/courses.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
     //
     // // Delete student
     // get("/students/:id/delete", (request, response) -> {

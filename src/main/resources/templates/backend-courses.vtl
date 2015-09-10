@@ -1,0 +1,22 @@
+courses.vtl
+
+<table class="table table-striped" border="1">
+  <thead>
+  <th>
+    <h1>Courses</h1>
+  </th>
+</thead>
+  <tbody>
+    <tr>
+      <td>
+        <ul>
+          #foreach($course in $allCourses)
+          <li><a href="/course/$course.getCourseId()">$course.getName()</a>&nbsp;&nbsp;<a href="/backend/courses/$course.getCourseId()/edit"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;<a href="/backend/courses/$course.getCourseId()/delete"><span class="glyphicon glyphicon-trash"></span></a></li>
+          #end
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<a href="/backend/course/new">Add new Course</a> <a href="/backend"> Go To Admin Home</a>
