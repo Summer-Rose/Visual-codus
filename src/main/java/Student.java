@@ -93,62 +93,30 @@ public class Student {
     }
   }
 
-  public static HashMap<String, String> getSalaryRanges() {
+  public static HashMap<Integer, String> getSalaryRanges() {
     try (Connection con = DB.sql2o.open()) {
       String sql = "SELECT salary_before FROM students ORDER BY salary_before";
       List<Integer> salaries = con.createQuery(sql)
         .executeAndFetch(Integer.class);
 
-      HashMap<String, String> salaryRanges = new HashMap<String, String>();
-
-      Integer students010 = 0;
-      Integer students1020 = 0;
-      Integer students2030 = 0;
-      Integer students3040 = 0;
-      Integer students4050 = 0;
-      Integer students5060 = 0;
-      Integer students6070 = 0;
-      Integer students7080 = 0;
-      Integer students8090 = 0;
-      Integer students90plus = 0;
-
-      for(Integer salary : salaries) {
-        if (salary < 10000) {
-          students010++;
-        } else if (salary >= 10000 && salary < 20000) {
-          students1020++;
-        } else if (salary >= 20000 && salary < 30000) {
-          students2030++;
-        } else if (salary >= 30000 && salary < 40000) {
-          students3040++;
-        } else if (salary >= 40000 && salary < 50000) {
-          students4050++;
-        } else if (salary >= 50000 && salary < 60000) {
-          students5060++;
-        } else if (salary >= 60000 && salary < 70000) {
-          students6070++;
-        } else if (salary >= 70000 && salary < 80000) {
-          students7080++;
-        } else if (salary >= 80000 && salary < 90000) {
-          students8090++;
-        } else {
-          students90plus++;
+      HashMap<Integer, Integer> salaryRange = new HashMap<Integer, Integer>();
+        //Initializing salaryRange keys with values set to 0
+        for (Integer i = 0; i <= 9; i++) {
+          salaryRange.put(i, 0);
         }
-      }
-
-      salaryRanges.put("salary010", String div010 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$0-10,000</p></div>", students010 * 100 / Student.all().size()));
-      salaryRanges.put("salary1020", String div1020 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$10- 20,000</p></div>", students1020 * 100 / Student.all().size()));
-      salaryRanges.put("salary2030", String div2030 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$20-30,000</p></div>", students2030 * 100 / Student.all().size()));
-      salaryRanges.put("salary3040", String div3040 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$30-40,000</p></div>", students3040 * 100 / Student.all().size()));
-      salaryRanges.put("salary4050", String div4050 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$40-50,000</p></div>", students4050 * 100 / Student.all().size()));
-      salaryRanges.put("salary5060", String div5060 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$50-60,000</p></div>", students5060 * 100 / Student.all().size()));
-      salaryRanges.put("salary6070", String div6070 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$60-70,000</p></div>", students6070 * 100 / Student.all().size()));
-      salaryRanges.put("salary7080", String div7080 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$70-80,000</p></div>", students7080 * 100 / Student.all().size()));
-      salaryRanges.put("salary8090", String div8090 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$80-90,000</p></div>", students8090 * 100 / Student.all().size()));
-      salaryRanges.put("salary90plus", String div90plus = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"><p>$90,000+</p></div>", students90plus * 100 / Student.all().size()));
-      return salaryRanges;
-    }
+        for (Integer salary : salaries) {
+          Integer key = salary/10000;
+          salaryRange.put(key, salaryRange.get(key)+1);
+          }
+      HashMap<Integer, String> salaryDivs = new HashMap<Integer, String>();
+        //Initializing salaryDiv keys with values set to 0
+        for (Integer i = 0; i <= 9; i++) {
+          String div = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\"></div>", salaryRange.get(i) * 100 / Student.all().size());
+          salaryDivs.put(i, div);
+        }
+      return salaryDivs;
   }
+}
 
   public Student youngest(){
     try (Connection con = DB.sql2o.open()) {
