@@ -5,6 +5,7 @@
 import java.util.List;
 import java.util.ArrayList;
 import org.sql2o.*;
+import java.util.HashMap;
 
 
 public class Student {
@@ -92,6 +93,39 @@ public class Student {
     }
   }
 
+  public static HashMap<String, String> getSalaryRanges() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT salary_before FROM students ORDER BY salary_before";
+      List<Integer> salaries = con.createQuery(sql)
+        .executeAndFetch(Integer.class);
+
+      HashMap<String, String> salaryRanges = new HashMap<String, String>();
+
+      Integer students010 = 0;
+      Integer students1020 = 0;
+      Integer students2030 = 0;
+      for(Integer salary : salaries) {
+        if (salary < 10000) {
+          students010++;
+        } else if (salary >= 10000 && salary < 20000) {
+          students1020++;
+        } else if (salary >= 20000 && salary < 30000) {
+          students2030++;
+        }
+      }
+      String div010 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\">", students010);
+      String div1020 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\">", students1020);
+      String div2030 = String.format("<div style=\"height: 20px; width: %d%%; background-color: red\">", students2030);
+      salaryRanges.put("salary010", div010);
+      salaryRanges.put("salary1020", div1020);
+      salaryRanges.put("salary2030", div2030);
+      System.out.println("TEST: " + salaryRanges.get("salary010"));
+      System.out.println("TEST: " + salaryRanges.get("salary1020"));
+      System.out.println("TEST: " + salaryRanges.get("salary2030"));
+      return salaryRanges;
+    }
+  }
+
   public Student youngest(){
     try (Connection con = DB.sql2o.open()) {
       String sql = "SELECT age FROM students ORDER BY age";
@@ -131,15 +165,14 @@ public class Student {
           .executeAndFetch(Student.class);
 
         Integer percentage = students.size() * 100 / Student.all().size();
-        // System.out.println(students.size());
-        // System.out.println(Student.all().size());
-        // System.out.println(percentage);
         String htmlString = String.format("<div style=\"height: 20px; width: %d%%; background-color: green\"><p class=\"age\">%d</p></div>", percentage, age);
         divStrings.add(htmlString);
       }
     }
     return divStrings;
   }
+
+
 
   public static Student find(Integer student_id) {
     try(Connection con = DB.sql2o.open()) {
