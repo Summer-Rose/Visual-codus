@@ -1,10 +1,15 @@
-<head>
-    <title>Welcome, Registrar</title>
-</head>
-<body>
-<a href="/courses">See all courses</a><br><br>
-<a href="/students">See all students</a>
-</tbody>
+<div class="container">
+  <div class="graph-container">
+    #foreach ($student in $students)
+        $student
+        <br>
+    #end
+  </div>
+</div>
 
-
-</body>
+<div class="container">
+  #foreach ($number in [0..9])
+    $salaryRanges.get($number)
+    <br>
+  #end
+</div>
