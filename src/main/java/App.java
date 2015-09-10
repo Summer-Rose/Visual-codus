@@ -20,7 +20,8 @@ public class App {
       List<Integer> uniqueAges = Student.getUniqueAges();
       model.put("students", Student.studentsByAge(uniqueAges));
       model.put("salaryRanges", Student.getSalaryRanges());
-
+      List<String> allGenders = Student.getAllGenders();
+      model.put("studentgenders", Student.displayGender(allGenders));
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
