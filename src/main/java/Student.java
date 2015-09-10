@@ -18,7 +18,7 @@ public class Student {
   private Integer distance_traveled;
   private Integer salary_before;
 
-  public Student(Integer course_id, Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
+  public Student(Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     this.course_id = course_id;
     this.age = age;
     this.gender = gender;
@@ -84,6 +84,36 @@ public class Student {
     }
   }
 
+  // public static List<Student> allStudentsByCourse(Integer course_id) {
+  //   String sql = "SELECT * FROM students WHERE course_id:=course_id";
+  //   try(Connection con = DB.sql2o.open()) {
+  //     return con.createQuery(sql)
+  //     .addParameter("course_id", course_id)
+  //     .executeAndFetch(Student.class);
+  //   }
+  // }
+
+
+  public static String getCourseNameByStudentId(int student_id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT course_name FROM courses JOIN students ON (students.course_id = courses.course_id) WHERE students.student_id = :student_id";
+      String courseName = con.createQuery(sql)
+        .addParameter("student_id", student_id)
+        .executeAndFetchFirst(String.class);
+      return courseName;
+    }
+  }
+
+  public static Student find(Integer student_id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM students where student_id=:student_id";
+      Student student = con.createQuery(sql)
+        .addParameter("student_id", student_id)
+        .executeAndFetchFirst(Student.class);
+      return student;
+    }
+  }
+
   public static List<Integer> getUniqueAges() {
     try (Connection con = DB.sql2o.open()) {
       String sql = "SELECT DISTINCT age FROM students ORDER BY age";
@@ -115,8 +145,8 @@ public class Student {
           salaryDivs.put(i, div);
         }
       return salaryDivs;
+    }
   }
-}
 
   public Student youngest(){
     try (Connection con = DB.sql2o.open()) {
@@ -165,18 +195,27 @@ public class Student {
   }
 
 
+  // public static Student find(Integer student_id) {
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String sql = "SELECT * FROM students where student_id=:student_id";
+  //     Student student = con.createQuery(sql)
+  //       .addParameter("student_id", student_id)
+  //       .executeAndFetchFirst(Student.class);
+  //     return student;
+  //   }
+  // }
 
-  public static Student find(Integer student_id) {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM students where student_id=:student_id";
-      Student student = con.createQuery(sql)
-        .addParameter("student_id", student_id)
-        .executeAndFetchFirst(Student.class);
-      return student;
-    }
+  public void addCourse(Course course) {
+  try (Connection con = DB.sql2o.open()) {
+    String sql = "UPDATE students SET course_id=:course_id WHERE student_id=:student_id";
+    con.createQuery(sql)
+      .addParameter("course_id", course.getCourseId())
+      .addParameter("student_id", this.getStudentId())
+      .executeUpdate();
   }
+}
 
-  public void update(Integer course_id, Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
+  public void update(Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE students SET course_id=:course_id, age=:age, gender=:gender, origin=:origin, distance_traveled=:distance_traveled, salary_before=:salary_before WHERE student_id=:student_id";
       con.createQuery(sql)

@@ -1,0 +1,33 @@
+
+.border_bottom{
+  border-bottom:2px solid #cccccc;
+}
+
+/*Footer styles*/
+
+html {
+  position: relative;
+  min-height: 100%;
+  border-top:20px solid #26809E;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #615D63;
+  color:white;
+  padding:1rem;
+}
+
+.container {
+  width: auto;
+  max-width: 90%;
+  padding: 0 15px;
+}

@@ -1,53 +1,73 @@
 
   #if ($editStudent)
     <p>
-    Edit this student:
+    <h1>Edit this student:</h1>
     </p>
 
-    <form action="/students/$editStudent.getStudentId()" method="post">
-    <label for="editStudentFirstName">Student First Name:</label>
-      <input type="text" name="editStudentFirstName" id="editStudentFirstName" value="$editStudent.getFirstName()">
-      <br>
-    <label for="editStudentLastName">Student Last Name:</label>
-      <input type="text" name="editStudentLastName" id="editStudentLastName" value="$editStudent.getLastName()">
-      <br>
-    <label for="editStudentDate">Student Date Of Enrollment:</label>
-      <input type="date" name="editStudentDate" id="editStudentDate" value="$editStudent.getDate()">
-
-      <label for="editCourses">Change courses:</label>
-      <select name="editCourses">
-        #foreach ($course in $allCourses)
-      <option value="$course.getCourseId()">$course.getName() $course.getCourseNumber()</option>
-        #end
-      </select>
-
-      <br>
-          <button type="submit"> Go!</button>
+    <form action="/backend/students/$editStudent.getStudentId()" method="post">
+      <label for="age">Student Age:</label>
+        <input type="text" name="age" id="age" value="$editStudent.getAge()">
+        <br> $editStudent.getGender()
+      <label for="gender">Student Self-identified Gender:</label>
+      Current gender:
+        <select name="gender">
+          <option value="F">I am a cisgendered woman</option>
+          <option value="NB">I am non-binary identified</option>
+          <option value="T">I am transgendered</option>
+          <option value="M">I am a cisgendered man</option>
+        </select>
+        <br>
+      <label for="origin">City student moved from for Epicodus:</label>
+        <input type="text" name="origin" id="origin" value="$editStudent.getOrigin()">
+        <br>
+        <label for="distance">Distance student travelled for Epicodus in miles:</label>
+          <input type="text" name="distance" id="distance" value="$editStudent.getDistanceTraveled()">
+          <br>
+        <label for="salary">Salary student made before Epicodus (gross annual income in thousands):</label>
+          <input type="text" name="salary" id="salary" value="$editStudent.getSalaryBefore()">
+          <br>
+          Current course: $editStudent.getCourseNameByStudentId($editStudent.getStudentId())
+        <label for="studentCourses">Edit courses:</label>
+        <select name="studentCourses">
+          #foreach ($course in $allCourses)
+        <option value="$course.getCourseId()">$course.getName()</option>
+          #end
+        </select>
+            <button type="submit"> Go!</button>
     </form>
 
   #else
     <p>
-    Add a new student:
+    <h1>Add a new student:</h1>
     </p>
 
-    <form action="/students" method="post">
-      <label for="studentFirstName">Student First Name:</label>
-        <input type="text" name="studentFirstName" id="studentFirstName">
+    <form action="/backend/students" method="post">
+      <label for="age">Student Age:</label>
+        <input type="text" name="age" id="age">
         <br>
-      <label for="studentLastName">Student Last Name:</label>
-        <input type="text" name="studentLastName" id="studentLastName">
+      <label for="gender">Most appropriate gender:</label>
+        <select name="gender">
+          <option value="F">I am a cisgendered woman</option>
+          <option value="NB">I am non-binary identified</option>
+          <option value="T">I am transgendered</option>
+          <option value="M">I am a cisgendered man</option>
+        </select>
         <br>
-      <label for="studentDate">Student Date Of Enrollment:</label>
-        <input type="date" name="studentDate" id="studentDate">
+      <label for="origin">City student moved from for Epicodus:</label>
+        <input type="text" name="origin" id="origin">
         <br>
-
-        <label for="studentCourses">Add courses:</label>
+        <label for="distance">Distance student travelled for Epicodus in miles:</label>
+          <input type="text" name="distance" id="distance">
+          <br>
+        <label for="salary">Salary student made before Epicodus (gross annual income in thousands):</label>
+          <input type="text" name="salary" id="salary">
+          <br>
+        <label for="studentCourses">This student is enrolled in:</label>
         <select name="studentCourses">
           #foreach ($course in $allCourses)
-        <option value="$course.getCourseId()">$course.getName() $course.getCourseNumber()</option>
+        <option value="$course.getCourseId()">$course.getName()</option>
           #end
         </select>
-
             <button type="submit"> Go!</button>
     </form>
   #end
