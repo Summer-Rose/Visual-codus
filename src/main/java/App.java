@@ -20,53 +20,23 @@ public class App {
       List<Integer> uniqueAges = Student.getUniqueAges();
       model.put("students", Student.studentsByAge(uniqueAges));
       model.put("salaryRanges", Student.getSalaryRanges());
+
+      Integer windowHeight = 200;
+      Integer windowWidth = 800;
+      model.put("wHeight", windowHeight);
+      model.put("wWidth", windowWidth);
+      model.put("stringDistancesSVG", Student.stringDistancesSVG(windowHeight, windowWidth, "black", "red", 5));
+      model.put("stringOrigins", Student.stringOrigins());
+
+
       List<String> allGenders = Student.getAllGenders();
-      model.put("studentgenders", Student.displayGender(allGenders));
+      model.put("genders", Student.displayGender(allGenders));
+
+
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    // // Index for courses
-    // get("/courses", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   model.put("allCourses", Course.all());
-    //   model.put("template", "templates/courses.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
-
-    // // Index for students
-    // get("/students", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   model.put("allStudents", Student.all());
-    //   model.put("template", "templates/students.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
-
-    // // Show individual course
-    // get("/course/:id", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   int id = Integer.parseInt(request.params(":id"));
-    //   Course showCourse = Course.find(id);
-    //   model.put("showCourse", showCourse);
-    //   model.put("template", "templates/course.vtl");
-    //   return new ModelAndView(model, layout);
-    //   }, new VelocityTemplateEngine());
-
-    // // Show individual student
-    // get("/student/:id", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   int id = Integer.parseInt(request.params(":id"));
-    //   Student showStudent = Student.find(id);
-    //   model.put("showStudent", showStudent);
-    //   model.put("template", "templates/student.vtl");
-    //   return new ModelAndView(model, layout);
-    //   }, new VelocityTemplateEngine());
-
-<<<<<<< HEAD
-    // // Show empty new course form
-    // get("/courses/new", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-=======
 //////////backend//////////
 
     //backend homepage
@@ -78,7 +48,7 @@ public class App {
     }, new VelocityTemplateEngine());
 
     // Show individual course with edit fields
-    get("/course/:id", (request, response) -> {
+    get("/backend/course/:id", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       int id = Integer.parseInt(request.params(":id"));
       Course showCourse = Course.find(id);
@@ -107,21 +77,11 @@ public class App {
     // Show empty new course form
     get("/backend/course/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
->>>>>>> 8c9336d4d24e82cf0ceec16414cb33e8a5cc4e11
 
-    //   model.put("template", "templates/course-form.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
+      model.put("template", "templates/course-form.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
-<<<<<<< HEAD
-    // // Show empty new student form
-    // get("/students/new", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   model.put("allCourses", Course.all());
-    //   model.put("template", "templates/student-form.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
-=======
     // Show empty new student form
     get("/backend/student/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -129,7 +89,6 @@ public class App {
       model.put("template", "templates/student-form.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
->>>>>>> 8c9336d4d24e82cf0ceec16414cb33e8a5cc4e11
 
     // Create course
     post("/backend/courses", (request, response) -> {
