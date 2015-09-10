@@ -1,7 +1,18 @@
+
 <div class="row border_bottom">
   <div class="col-md-12">
     <p><h1 class="text-center">Welcome to Visual Codus</h1>
     <h3 class="text-center">Who are Epicodus students? Where do they come from, how old are they, and which classes are they enrolled in?</h3></p>
+<svg height=$wHeight width=$wWidth>
+  #foreach($svgElement in $stringDistancesSVG)
+  $svgElement
+  #end
+</svg>
+
+#foreach ($origin in $stringOrigins)
+<h3>$origin</h3>
+#end
+<div class="row">
 
       <div class="row">
         <div class="col-md-6">
