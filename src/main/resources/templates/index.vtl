@@ -8,23 +8,8 @@
 </div>
 
 <div class="container">
-  $salaryRanges.get("salary010")
-  <br>
-  $salaryRanges.get("salary1020")
-  <br>
-  $salaryRanges.get("salary2030")
-  <br>
-  $salaryRanges.get("salary3040")
-  <br>
-  $salaryRanges.get("salary4050")
-  <br>
-  $salaryRanges.get("salary5060")
-  <br>
-  $salaryRanges.get("salary6070")
-  <br>
-  $salaryRanges.get("salary7080")
-  <br>
-  $salaryRanges.get("salary8090")
-  <br>
-  $salaryRanges.get("salary90plus")
+  #foreach ($number in [0..9])
+    $salaryRanges.get($number)
+    <br>
+  #end
 </div>
