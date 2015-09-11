@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: courses; Type: TABLE; Schema: public; Owner: mozawa; Tablespace:
+-- Name: courses; Type: TABLE; Schema: public; Owner: Guest; Tablespace:
 --
 
 CREATE TABLE courses (
@@ -39,10 +39,10 @@ CREATE TABLE courses (
 );
 
 
-ALTER TABLE courses OWNER TO mozawa;
+ALTER TABLE courses OWNER TO "Guest";
 
 --
--- Name: courses_course_id_seq; Type: SEQUENCE; Schema: public; Owner: mozawa
+-- Name: courses_course_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
 --
 
 CREATE SEQUENCE courses_course_id_seq
@@ -53,17 +53,17 @@ CREATE SEQUENCE courses_course_id_seq
     CACHE 1;
 
 
-ALTER TABLE courses_course_id_seq OWNER TO mozawa;
+ALTER TABLE courses_course_id_seq OWNER TO "Guest";
 
 --
--- Name: courses_course_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mozawa
+-- Name: courses_course_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
 --
 
 ALTER SEQUENCE courses_course_id_seq OWNED BY courses.course_id;
 
 
 --
--- Name: students; Type: TABLE; Schema: public; Owner: mozawa; Tablespace:
+-- Name: students; Type: TABLE; Schema: public; Owner: Guest; Tablespace:
 --
 
 CREATE TABLE students (
@@ -72,15 +72,15 @@ CREATE TABLE students (
     age integer,
     gender character varying,
     origin character varying,
-    distance_traveled character varying,
+    distance_traveled integer,
     salary_before integer
 );
 
 
-ALTER TABLE students OWNER TO mozawa;
+ALTER TABLE students OWNER TO "Guest";
 
 --
--- Name: students_student_id_seq; Type: SEQUENCE; Schema: public; Owner: mozawa
+-- Name: students_student_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
 --
 
 CREATE SEQUENCE students_student_id_seq
@@ -91,31 +91,31 @@ CREATE SEQUENCE students_student_id_seq
     CACHE 1;
 
 
-ALTER TABLE students_student_id_seq OWNER TO mozawa;
+ALTER TABLE students_student_id_seq OWNER TO "Guest";
 
 --
--- Name: students_student_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mozawa
+-- Name: students_student_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
 --
 
 ALTER SEQUENCE students_student_id_seq OWNED BY students.student_id;
 
 
 --
--- Name: course_id; Type: DEFAULT; Schema: public; Owner: mozawa
+-- Name: course_id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY courses ALTER COLUMN course_id SET DEFAULT nextval('courses_course_id_seq'::regclass);
 
 
 --
--- Name: student_id; Type: DEFAULT; Schema: public; Owner: mozawa
+-- Name: student_id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY students ALTER COLUMN student_id SET DEFAULT nextval('students_student_id_seq'::regclass);
 
 
 --
--- Data for Name: courses; Type: TABLE DATA; Schema: public; Owner: mozawa
+-- Data for Name: courses; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
 COPY courses (course_id, course_name) FROM stdin;
@@ -123,14 +123,14 @@ COPY courses (course_id, course_name) FROM stdin;
 
 
 --
--- Name: courses_course_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mozawa
+-- Name: courses_course_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
 SELECT pg_catalog.setval('courses_course_id_seq', 1, false);
 
 
 --
--- Data for Name: students; Type: TABLE DATA; Schema: public; Owner: mozawa
+-- Data for Name: students; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
 COPY students (student_id, course_id, age, gender, origin, distance_traveled, salary_before) FROM stdin;
@@ -138,14 +138,14 @@ COPY students (student_id, course_id, age, gender, origin, distance_traveled, sa
 
 
 --
--- Name: students_student_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mozawa
+-- Name: students_student_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
 SELECT pg_catalog.setval('students_student_id_seq', 1, false);
 
 
 --
--- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: mozawa; Tablespace:
+-- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace:
 --
 
 ALTER TABLE ONLY courses
@@ -153,7 +153,7 @@ ALTER TABLE ONLY courses
 
 
 --
--- Name: students_pkey; Type: CONSTRAINT; Schema: public; Owner: mozawa; Tablespace:
+-- Name: students_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace:
 --
 
 ALTER TABLE ONLY students
@@ -161,12 +161,12 @@ ALTER TABLE ONLY students
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: mozawa
+-- Name: public; Type: ACL; Schema: -; Owner: epicodus
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM mozawa;
-GRANT ALL ON SCHEMA public TO mozawa;
+REVOKE ALL ON SCHEMA public FROM epicodus;
+GRANT ALL ON SCHEMA public TO epicodus;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
