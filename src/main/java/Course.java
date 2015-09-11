@@ -12,6 +12,11 @@ public class Course {
   private Integer course_id;
   private String course_name;
 
+
+  /**
+   * CONSTRUCTOR AND GETTERS FOR EACH INSTANCE VARIABLE
+   */
+
   public Course(String course_name) {
     this.course_name = course_name;
   }
@@ -72,16 +77,6 @@ public class Course {
       return courseName;
     }
   }
-
-  // public static List<Student> studentsByCourse(int course_id){
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT * FROM students WHERE course_id=:course_id";
-  //     List<Student> students = con.createQuery(sql)
-  //       .addParameter("course_id", course_id)
-  //       .executeAndFetchFirst(Student.class);
-  //     return students;
-  //   }
-  // }
 
   public void update(String course_name) {
     try(Connection con = DB.sql2o.open()) {
