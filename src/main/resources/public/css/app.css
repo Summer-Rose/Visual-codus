@@ -46,17 +46,23 @@ h4 {
 }
 
 .innerdiv {
-  border-radius: 5px;
   display: inline-block;
   box-sizing: border-box;
   margin: 0 -0.13em;
   padding: 0;
+  border-radius: 5px;
 }
 
 .gender-subtitle {
+  display: inline-block;
   height: 15px;
   width: 15px;
   border-radius: 5px;
+}
+
+.gender-subtitle:nth-child(2),
+.gender-subtitle:nth-child(3) {
+  margin-left: 10px;
 }
 
  /*Age Display Styles*/
