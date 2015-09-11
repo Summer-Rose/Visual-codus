@@ -12,9 +12,9 @@
 
 <div class="container">
 
-<div class="text-center well" style="height: 300px">
-  <h2>How far did they travel to attend Epicodus?</h2>
-  <div class="distance-map">
+<div class="text-center well" style="height: 400px">
+  <h3>How far did they travel to attend Epicodus?</h3>
+  <div class="distance-map" transform="translate(100)">
   <svg height=$wHeight width=$wWidth>
     #foreach($svgElement in $stringDistancesSVG)
     $svgElement
@@ -24,7 +24,7 @@
 
   <div class="cities">
   #foreach ($origin in $stringOrigins)
-  <h4>$origin</h4>
+  <h6>$origin</h6>
   #end
   </div>
 </div>
