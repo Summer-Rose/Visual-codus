@@ -1,0 +1,29 @@
+course_id,age,gender,origin,distance_traveled,salary_before
+1,38,F,Fresno,625,95000
+1,25,F,Gainesville,2436,12000
+1,28,F,Lexington,2314,25000
+1,40,F,Portland,0,38000
+1,32,F,Portland,0,0
+1,38,F,Bethany,36,0
+1,38,F,Bethany,36,0
+1,28,F,Portland,0,50000
+1,23,F,Eugene,104,0
+1,29,F,Sao Paolo,6743,35000
+1,26,F,Portland,0,28000
+1,22,F,Portland,0,0
+1,28,F,Portland,0,22000
+1,27,F,Northampton,2462,24000
+1,24,F,Portland,0,46000
+1,25,F,Portland,0,30000
+1,25,F,Virginia Beach,2467,0
+1,27,F,Kansas City,1496,44000
+1,25,F,Portland,0,7000
+1,29,F,Portland,0,21000
+1,39,F,Portland,0,10000
+1,30,F,Beaverton,7,23000
+1,33,F,Portland ,0,36000
+1,35,T,Portland,0,28000
+1,28,F,Portland,0,36000
+1,44,F,Portland,0,46000
+1,27,F,Charlotte,2357,36000
+1,25,F,Portland,0,27000
