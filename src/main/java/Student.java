@@ -25,7 +25,7 @@ public class Student {
    * CONSTRUCTOR AND GETTERS FOR EACH INSTANCE VARIABLE
    */
 
-  public Student(Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
+  public Student(Integer course_id, Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     this.course_id = course_id;
     this.age = age;
     this.gender = gender;
@@ -36,6 +36,10 @@ public class Student {
 
   public Integer getStudentId() {
     return student_id;
+  }
+
+  public Integer getCourseId() {
+    return course_id;
   }
 
   public Integer getAge() {
@@ -106,7 +110,7 @@ public class Student {
     }
   }
 
-  public void update(Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
+  public void update(Integer course_id, Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE students SET course_id=:course_id, age=:age, gender=:gender, origin=:origin, distance_traveled=:distance_traveled, salary_before=:salary_before WHERE student_id=:student_id";
       con.createQuery(sql)
@@ -159,7 +163,7 @@ public class Student {
    * HELPER METHOD FOR GRAPHICS: distance_traveled graphic
    */
 
-  /* getUniqueOriginsDistances returns a list of unique origins and distance_traveled values, sorted by distances_traveled in ascending order */
+  /** getUniqueOriginsDistances returns a list of unique origins and distance_traveled values, sorted by distances_traveled in ascending order */
   public static List<Student> getUniqueOriginsDistances() {
     try (Connection con = DB.sql2o.open()) {
       String sql = "SELECT DISTINCT origin, distance_traveled FROM students ORDER BY distance_traveled";
@@ -169,7 +173,7 @@ public class Student {
     }
   }
 
-  /* stringDistancesSVG creates and returns the string format of svg elements needed to draw the distance map */
+  /** stringDistancesSVG creates and returns the string format of svg elements needed to draw the distance map */
   public static List<String> stringDistancesSVG(Integer windowHeight, Integer windowWidth, String lineColor, String pointColor, Integer pointRadius) {
     // List of svg elements to draw in string format
     List<String> distanceSVGList = new ArrayList<String>();
@@ -286,6 +290,7 @@ public class Student {
     }
   }
 
+
   /**
    * HELPER METHOD FOR GRAPHICS: gender graphic
    */
@@ -314,11 +319,11 @@ public class Student {
         nonbinarytrans++;
       }
     }
-    String htmlStringF = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: green\"></div>", female * 100 / Student.all().size());
+    String htmlStringF = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: #009688\"></div>", female * 100 / Student.all().size());
     divStrings.add(htmlStringF);
-    String htmlStringM = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: red\"></div>", male * 100 / Student.all().size());
+    String htmlStringM = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: #FF9800\"></div>", male * 100 / Student.all().size());
     divStrings.add(htmlStringM);
-    String htmlStringNBT = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: blue\"></div>", nonbinarytrans * 100 / Student.all().size());
+    String htmlStringNBT = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: #2196F3\"></div>", nonbinarytrans * 100 / Student.all().size());
     divStrings.add(htmlStringNBT);
     return divStrings;
   }
