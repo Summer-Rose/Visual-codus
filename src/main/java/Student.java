@@ -1,5 +1,7 @@
 /**
- * Student.java provides CRUD functionality for Student objects
+ * Student.java provides CRUD functionality for student objects
+ *
+ * @since 09-09-2015
  */
 
 import java.util.List;
@@ -18,7 +20,12 @@ public class Student {
   private Integer distance_traveled;
   private Integer salary_before;
 
-  public Student(Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
+
+  /**
+   * CONSTRUCTOR AND GETTERS FOR EACH INSTANCE VARIABLE
+   */
+
+  public Student(Integer course_id, Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     this.course_id = course_id;
     this.age = age;
     this.gender = gender;
@@ -29,6 +36,10 @@ public class Student {
 
   public Integer getStudentId() {
     return student_id;
+  }
+
+  public Integer getCourseId() {
+    return course_id;
   }
 
   public Integer getAge() {
@@ -52,7 +63,7 @@ public class Student {
   }
 
   @Override
-  public boolean equals(Object otherStudent){
+  public boolean equals(Object otherStudent) {
     if (!(otherStudent instanceof Student)) {
       return false;
     } else {
@@ -61,6 +72,11 @@ public class Student {
              this.getStudentId() == newStudent.getStudentId();
     }
   }
+
+
+  /**
+   * CRUD OPERATIONS FOR ADMIN
+   */
 
   public void save() {
   try(Connection con = DB.sql2o.open()) {
@@ -84,26 +100,6 @@ public class Student {
     }
   }
 
-  // public static List<Student> allStudentsByCourse(Integer course_id) {
-  //   String sql = "SELECT * FROM students WHERE course_id:=course_id";
-  //   try(Connection con = DB.sql2o.open()) {
-  //     return con.createQuery(sql)
-  //     .addParameter("course_id", course_id)
-  //     .executeAndFetch(Student.class);
-  //   }
-  // }
-
-
-  public static String getCourseNameByStudentId(int student_id) {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT course_name FROM courses JOIN students ON (students.course_id = courses.course_id) WHERE students.student_id = :student_id";
-      String courseName = con.createQuery(sql)
-        .addParameter("student_id", student_id)
-        .executeAndFetchFirst(String.class);
-      return courseName;
-    }
-  }
-
   public static Student find(Integer student_id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM students where student_id=:student_id";
@@ -114,108 +110,7 @@ public class Student {
     }
   }
 
-  public static List<Integer> getUniqueAges() {
-    try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT DISTINCT age FROM students ORDER BY age";
-      List<Integer> ages = con.createQuery(sql)
-        .executeAndFetch(Integer.class);
-      return ages;
-    }
-  }
-
-  public static HashMap<Integer, String> getSalaryRanges() {
-    try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT salary_before FROM students ORDER BY salary_before";
-      List<Integer> salaries = con.createQuery(sql)
-        .executeAndFetch(Integer.class);
-
-      HashMap<Integer, Integer> salaryRange = new HashMap<Integer, Integer>();
-        //Initializing salaryRange keys with values set to 0
-        for (Integer i = 0; i <= 9; i++) {
-          salaryRange.put(i, 0);
-        }
-        for (Integer salary : salaries) {
-          Integer key = salary/10000;
-          salaryRange.put(key, salaryRange.get(key)+1);
-          }
-      HashMap<Integer, String> salaryDivs = new HashMap<Integer, String>();
-        //Initializing salaryDiv keys and adding String div
-        for (Integer i = 0; i <= 9; i++) {
-          String div = String.format("<div style=\"width: %d%%;\" class=\"bar-style salary-bar\"></div>", salaryRange.get(i) * 100 / Student.all().size());
-          salaryDivs.put(i, div);
-        }
-      return salaryDivs;
-    }
-  }
-
-  public Student youngest(){
-    try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT age FROM students ORDER BY age";
-      return con.createQuery(sql)
-      .executeAndFetchFirst(Student.class);
-    }
-  }
-
-  public Student oldest(){
-    try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT age FROM students ORDER BY age DESC";
-      return con.createQuery(sql)
-      .executeAndFetchFirst(Student.class);
-    }
-  }
-
-  // public String getPercentage(int age) {
-  //   try (Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT * FROM students WHERE age = :age";
-  //     List<Student> students = con.createQuery(sql)
-  //       .addParameter("age", age)
-  //       .executeAndFetch(Student.class);
-  //
-  //       Integer percentage = students.size() * 100 / Student.all().size();
-  //       String htmlString = String.format("<div style=\"height: 10px; width: %d%%; background-color: green\"></div>", percentage);
-  //       return htmlString;
-  //     }
-  // }
-
-  public static List<String> studentsByAge(List<Integer> ages){
-    List<String> divStrings = new ArrayList<String>();
-    for (Integer age : ages) {
-      try (Connection con = DB.sql2o.open()) {
-        String sql = "SELECT * FROM students WHERE age = :age";
-        List<Student> students = con.createQuery(sql)
-          .addParameter("age", age)
-          .executeAndFetch(Student.class);
-
-        Integer percentage = students.size() * 100 / Student.all().size();
-        String htmlString = String.format("<div style=\"width: %d%%\" class=\"bar-style age-bar\"><p class=\"age\">%d</p></div>", percentage, age);
-        divStrings.add(htmlString);
-      }
-    }
-    return divStrings;
-  }
-
-
-  // public static Student find(Integer student_id) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT * FROM students where student_id=:student_id";
-  //     Student student = con.createQuery(sql)
-  //       .addParameter("student_id", student_id)
-  //       .executeAndFetchFirst(Student.class);
-  //     return student;
-  //   }
-  // }
-
-  public void addCourse(Course course) {
-  try (Connection con = DB.sql2o.open()) {
-    String sql = "UPDATE students SET course_id=:course_id WHERE student_id=:student_id";
-    con.createQuery(sql)
-      .addParameter("course_id", course.getCourseId())
-      .addParameter("student_id", this.getStudentId())
-      .executeUpdate();
-  }
-}
-
-  public void update(Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
+  public void update(Integer course_id, Integer age, String gender, String origin, Integer distance_traveled, Integer salary_before) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE students SET course_id=:course_id, age=:age, gender=:gender, origin=:origin, distance_traveled=:distance_traveled, salary_before=:salary_before WHERE student_id=:student_id";
       con.createQuery(sql)
@@ -238,6 +133,35 @@ public class Student {
         .executeUpdate();
     }
   }
+
+
+  /**
+   * HELPER METHOD FOR GRAPHICS: showing students by course
+   */
+
+  public static List<Student> allStudentsByCourse(Integer course_id) {
+    String sql = "SELECT * FROM students WHERE course_id:=course_id";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql)
+      .addParameter("course_id", course_id)
+      .executeAndFetch(Student.class);
+    }
+  }
+
+  public static String getCourseNameByStudentId(int student_id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT course_name FROM courses JOIN students USING (course_id) WHERE students.student_id=:student_id";
+      String courseName = con.createQuery(sql)
+        .addParameter("student_id", student_id)
+        .executeAndFetchFirst(String.class);
+      return courseName;
+    }
+  }
+
+
+  /**
+   * HELPER METHOD FOR GRAPHICS: distance_traveled graphic
+   */
 
   /** getUniqueOriginsDistances returns a list of unique origins and distance_traveled values, sorted by distances_traveled in ascending order */
   public static List<Student> getUniqueOriginsDistances() {
@@ -289,6 +213,88 @@ public class Student {
     return originList;
   }
 
+
+  /**
+   * HELPER METHOD FOR GRAPHICS: age graphic
+   */
+
+   public static List<String> studentsByAge(List<Integer> ages) {
+     List<String> divStrings = new ArrayList<String>();
+     for (Integer age : ages) {
+       try (Connection con = DB.sql2o.open()) {
+         String sql = "SELECT * FROM students WHERE age=:age";
+         List<Student> students = con.createQuery(sql)
+           .addParameter("age", age)
+           .executeAndFetch(Student.class);
+
+         Integer percentage = students.size() * 100 / Student.all().size();
+         String htmlString = String.format("<div style=\"width: %d%%\" class=\"bar-style age-bar\"><p class=\"age\">%d</p></div>", percentage, age);
+         divStrings.add(htmlString);
+       }
+     }
+     return divStrings;
+   }
+
+  public static List<Integer> getUniqueAges() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT DISTINCT age FROM students ORDER BY age";
+      List<Integer> ages = con.createQuery(sql)
+        .executeAndFetch(Integer.class);
+      return ages;
+    }
+  }
+
+  public Student youngest() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT age FROM students ORDER BY age";
+      return con.createQuery(sql)
+      .executeAndFetchFirst(Student.class);
+    }
+  }
+
+  public Student oldest() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT age FROM students ORDER BY age DESC";
+      return con.createQuery(sql)
+      .executeAndFetchFirst(Student.class);
+    }
+  }
+
+
+  /**
+   * HELPER METHOD FOR GRAPHICS: salary range graphic
+   */
+
+  public static HashMap<Integer, String> getSalaryRanges() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT salary_before FROM students ORDER BY salary_before";
+      List<Integer> salaries = con.createQuery(sql)
+        .executeAndFetch(Integer.class);
+
+      HashMap<Integer, Integer> salaryRange = new HashMap<Integer, Integer>();
+        //Initializing salaryRange keys with values set to 0
+        for (Integer i = 0; i <= 9; i++) {
+          salaryRange.put(i, 0);
+        }
+        for (Integer salary : salaries) {
+          Integer key = salary/10000;
+          salaryRange.put(key, salaryRange.get(key)+1);
+          }
+      HashMap<Integer, String> salaryDivs = new HashMap<Integer, String>();
+        //Initializing salaryDiv keys and adding String div
+        for (Integer i = 0; i <= 9; i++) {
+          String div = String.format("<div style=\"width: %d%%;\" class=\"bar-style salary-bar\"></div>", salaryRange.get(i) * 100 / Student.all().size());
+          salaryDivs.put(i, div);
+        }
+      return salaryDivs;
+    }
+  }
+
+
+  /**
+   * HELPER METHOD FOR GRAPHICS: gender graphic
+   */
+
   public static List<String> getAllGenders() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT gender FROM students";
@@ -298,7 +304,7 @@ public class Student {
     }
   }
 
-  public static List<String> displayGender(List<String> listGenders){
+  public static List<String> displayGender(List<String> listGenders) {
     List<String> divStrings = new ArrayList<String>();
     Integer female = 0;
     Integer male = 0;
@@ -313,15 +319,12 @@ public class Student {
         nonbinarytrans++;
       }
     }
-    String htmlStringF = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: green\"></div>", female * 100 / Student.all().size());
+    String htmlStringF = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: #009688\"></div>", female * 100 / Student.all().size());
     divStrings.add(htmlStringF);
-    String htmlStringM = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: red\"></div>", male * 100 / Student.all().size());
+    String htmlStringM = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: #FF9800\"></div>", male * 100 / Student.all().size());
     divStrings.add(htmlStringM);
-    String htmlStringNBT = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: blue\"></div>", nonbinarytrans * 100 / Student.all().size());
+    String htmlStringNBT = String.format("<div class=\"innerdiv\" style=\"height: 20px; width: %d%%; background-color: #2196F3\"></div>", nonbinarytrans * 100 / Student.all().size());
     divStrings.add(htmlStringNBT);
     return divStrings;
   }
-
-
-
 }
