@@ -37,6 +37,11 @@ Switch back to the first tab and populate the database:
 $ psql visual_codus < visual-codus.sql
 ```
 
+Populate the database with epicodus-java.csv
+```
+$ psql COPY students (course_id, age, gender, origin, distance_traveled, salary_before) FROM '/path/to/epicodus-java.csv' DELIMITER ',' CSV HEADER;
+```
+
 Finally, to run this web app:
 ```
 $ gradle run
