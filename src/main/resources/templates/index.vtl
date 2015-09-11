@@ -36,10 +36,16 @@
 <div class="row">
     <div class="col-md-6">
       <h3>Ages of Students in Percent of Total</h3>
-      #foreach ($student in $students)
-          $student
-          <br>
-      #end
+      <table id="student_ages" width="400px">
+        <tbody>
+          #foreach ($student in $students)
+          <tr>
+            <td>$student</td>
+          </tr>
+          #end
+        </tbody>
+      </table>
+
     </div>
 
     <div class="col-md-6" id="salary">
@@ -50,7 +56,7 @@
           <th>
             Ranges
           </th>
-          <th>
+          <th width="350px">
             Frequency
           </th>
         </thead>

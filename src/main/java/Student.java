@@ -218,6 +218,7 @@ public class Student {
    * HELPER METHOD FOR GRAPHICS: age graphic
    */
 
+   // FIXME: Make ArrayList similar to salary range
    public static List<String> studentsByAge(List<Integer> ages) {
      List<String> divStrings = new ArrayList<String>();
      for (Integer age : ages) {
