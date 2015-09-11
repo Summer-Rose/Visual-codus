@@ -3,59 +3,83 @@
   <div class="col-md-12">
     <p><h1 class="text-center">Welcome to Visual Codus</h1>
     <h3 class="text-center">Who are Epicodus students? Where do they come from, how old are they, and which classes are they enrolled in?</h3></p>
-<svg height=$wHeight width=$wWidth>
-  #foreach($svgElement in $stringDistancesSVG)
-  $svgElement
+
+<br>
+
+<div class="text-center well" style="height: 300px">
+  <h2>How far did they travel to attend Epicodus?</h2>
+  <div class="distance-map">
+  <svg height=$wHeight width=$wWidth>
+    #foreach($svgElement in $stringDistancesSVG)
+    $svgElement
+    #end
+  </svg>
+  </div>
+
+  <div class="cities">
+  #foreach ($origin in $stringOrigins)
+  <h4>$origin</h4>
   #end
-</svg>
+  </div>
+</div>
 
-#foreach ($origin in $stringOrigins)
-<h3>$origin</h3>
-#end
+
+
+
+
 <div class="row">
-
-      <div class="row">
-        <div class="col-md-6">
-          <h3>Ages of Students in Percent of Total</h3>
-          #foreach ($student in $students)
-              $student
-              <br>
-          #end
-        </div>
-
-        <div class="col-md-6" id="salary">
-          <h3>Salary Range before attending Epicodus in Percent of Total</h3>
-          <hr>
-            <table id="salary_ranges">
-              <thead>
-              <th>
-                Ranges
-              </th>
-              <th>
-                Frequency
-              </th>
-            </thead>
-            <tbody>
-              <tr><td class="salary-box">$0 - 10K</td><td>$salaryRanges.get(0)</td></tr>
-              <tr><td class="salary-box">$10K - 20K</td><td>$salaryRanges.get(1)</td></tr>
-              <tr><td class="salary-box">$20K - 30K</td><td>$salaryRanges.get(2)</td></tr>
-              <tr><td class="salary-box">$30K - 40K</td><td>$salaryRanges.get(3)</td></tr>
-              <tr><td class="salary-box">$40K - 50K</td><td>$salaryRanges.get(4)</td></tr>
-              <tr><td class="salary-box">$50K - 60K</td><td>$salaryRanges.get(5)</td></tr>
-              <tr><td class="salary-box">$60K - 70K</td><td>$salaryRanges.get(6)</td></tr>
-              <tr><td class="salary-box">$80K - 90K</td><td>$salaryRanges.get(7)</td></tr>
-              <tr><td class="salary-box">$90K+</td><td>$salaryRanges.get(8)</td></tr>
-              </tbody>
-            </table>
-            <br>
-        </div>
+    <div class="col-md-6">
+      <h3>Ages of Students in Percent of Total</h3>
+      #foreach ($student in $students)
+          $student
+          <br>
+      #end
     </div>
+
+    <div class="col-md-6" id="salary">
+      <h3>Salary Range before attending Epicodus</h3>
+
+        <table id="salary_ranges">
+          <thead>
+          <th>
+            Ranges
+          </th>
+          <th>
+            Frequency
+          </th>
+        </thead>
+        <tbody>
+          <tr><td class="salary-box">$0 - 10K</td><td>$salaryRanges.get(0)</td></tr>
+          <tr><td class="salary-box">$10K - 20K</td><td>$salaryRanges.get(1)</td></tr>
+          <tr><td class="salary-box">$20K - 30K</td><td>$salaryRanges.get(2)</td></tr>
+          <tr><td class="salary-box">$30K - 40K</td><td>$salaryRanges.get(3)</td></tr>
+          <tr><td class="salary-box">$40K - 50K</td><td>$salaryRanges.get(4)</td></tr>
+          <tr><td class="salary-box">$50K - 60K</td><td>$salaryRanges.get(5)</td></tr>
+          <tr><td class="salary-box">$60K - 70K</td><td>$salaryRanges.get(6)</td></tr>
+          <tr><td class="salary-box">$80K - 90K</td><td>$salaryRanges.get(7)</td></tr>
+          <tr><td class="salary-box">$90K+</td><td>$salaryRanges.get(8)</td></tr>
+          </tbody>
+        </table>
+        <br>
+    </div>
+</div>
+
+
     <div class="row">
         <div class="col-md-12">
+          <h3>Gender</h3>
+          <br>
           #foreach ($gender in $genders)
           $gender
           #end
-      </div>
+        </div>
+    </div>
+
+    <div>
+      <div class="gender-subtitle" style="background-color: #009688"></div>Female
+      <div class="gender-subtitle" style="background-color: #FF9800"></div>Male
+      <div class="gender-subtitle" style="background-color: #2196F3"></div>Non-Binary and Transgender
+    </div>
 
   </div><!--/12-->
 </div>
