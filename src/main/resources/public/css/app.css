@@ -25,11 +25,13 @@ h4 {
 .distance-map {
   display: inline-block;
   float: left;
+  transform: translate(-25px,50px);
 }
 
 .cities {
   display: inline-block;
   float: right;
+  transform: translate(-25px,0px);
 }
 
 .gender-div {

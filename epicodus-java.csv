@@ -21,7 +21,7 @@ course_id,age,gender,origin,distance_traveled,salary_before
 1,29,F,Portland,0,21000
 1,39,F,Portland,0,10000
 1,30,F,Beaverton,7,23000
-1,33,F,Portland ,0,36000
+1,33,F,Portland,0,36000
 1,35,T,Portland,0,28000
 1,28,F,Portland,0,36000
 1,44,F,Portland,0,46000
